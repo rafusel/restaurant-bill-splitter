@@ -62,7 +62,7 @@ export default class OutputTable extends React.Component {
               this.getShareTotals().map((total, index) => (
                 <tr>
                   <td>{this.props.orderers[index]}</td>
-                  <td>{`$${total}`}</td>
+                  <td>{`$${total.toFixed(2)}`}</td>
                 </tr>
               ))
             }
