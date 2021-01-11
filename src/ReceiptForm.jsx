@@ -152,6 +152,8 @@ export default class ReceiptForm extends React.Component {
                 return item;
               })}
               columns={this.getColumns()}
+              pagination={false}
+              style={{ marginBottom: '15px' }}
             />
           )
         }

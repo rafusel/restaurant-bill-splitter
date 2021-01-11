@@ -73,7 +73,12 @@ export default class OutputTable extends React.Component {
           <Title>
             Your splits
           </Title>
-          <Table columns={columns} dataSource={this.getShareTotals()} />
+          <Table
+            columns={columns}
+            dataSource={this.getShareTotals()}
+            pagination={false}
+            style={{ marginBottom: '15px' }}
+          />
         </div>
       )
     }
