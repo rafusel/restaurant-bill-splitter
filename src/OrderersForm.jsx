@@ -9,19 +9,16 @@ const { Title } = Typography;
 export default function OrderersForm(props) {
   const orderers = props.orderers.map((orderer, index) => {
     return (
-      <React.Fragment>
-        <OrdererCard
-          name={orderer.toString()}
-          handleDelete={() => { props.deleteOrderer(index) }}
-        />
-      </React.Fragment>
+      <OrdererCard
+        name={orderer.toString()}
+        handleDelete={() => { props.deleteOrderer(index) }}
+      />
     );
   });
 
   const [newOrderer, setNewOrderer] = useState('');
 
   const onAddOrdererClick = () => {
-
     setNewOrderer('');
     props.addOrderer(newOrderer);
   }

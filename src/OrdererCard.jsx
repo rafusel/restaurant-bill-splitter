@@ -20,9 +20,9 @@ export default function OrdererCard(props) {
 
   return (
     <span style={styles}>
-      <UserOutlined />
-      {`  ${props.name}`}
-      <Button type="primary" onClick={props.handleDelete} style={{ marginLeft: '10px' }}>
+      <UserOutlined style={{ marginRight: '5px' }} />
+      {props.name}
+      <Button type="primary" onClick={props.handleDelete} style={{ marginLeft: '20px' }}>
         <DeleteOutlined />
       </Button>
     </span>

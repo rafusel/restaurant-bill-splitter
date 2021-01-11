@@ -3,7 +3,7 @@ import './App.css';
 import OrderersForm from './OrderersForm';
 import ReceiptForm from './ReceiptForm';
 import OutputTable from './OutputTable';
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import { CoffeeOutlined } from '@ant-design/icons';
 
 class App extends React.Component {
@@ -21,9 +21,18 @@ class App extends React.Component {
   }
 
   addOrderer = (orderer) => {
-    const orderers = this.state.orderers;
-    orderers.push(orderer);
-    this.setState({ orderers });
+    const doesOrdererExist = !!this.state.orderers.find(o => o === orderer);
+    const isOrdererBlank = orderer === '';
+
+    if (doesOrdererExist) {
+      message.error('Orderers must be unique.');
+    } else if (isOrdererBlank) {
+      message.error('Orderer is required.');
+    } else {
+      const orderers = this.state.orderers;
+      orderers.push(orderer);
+      this.setState({ orderers });
+    }
   }
 
   deleteOrderer = (index) => {

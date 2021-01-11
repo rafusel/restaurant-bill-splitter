@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Table, Button, Input, Select, Row, Col } from 'antd';
-import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -138,7 +138,7 @@ export default class ReceiptForm extends React.Component {
               size="large"
               onClick={this.addMealItem}
             >
-              Add Meal Item
+              <PlusOutlined />
             </Button>
           </Col>
         </Row>
