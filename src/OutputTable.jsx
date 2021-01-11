@@ -62,11 +62,12 @@ export default class OutputTable extends React.Component {
     const receiptValuesAreFloats = totalFloat && serviceFeeFloat && deliveryFeeFloat;
     const hasOrderers = this.props.orderers.length;
     const hasMealItems = this.props.receipt.mealItems.length;
+    const totalMakesSense = totalFloat >= (this.getSubtotal() + serviceFeeFloat + deliveryFeeFloat);
     const mealCostsAreFloats = this.props.receipt.mealItems.every((mealItem) => (
       parseFloat(mealItem.cost)
     ));
 
-    if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats && hasMealItems) {
+    if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats && hasMealItems && totalMakesSense) {
       return (
         <div style={{ paddingBottom: '30px' }}>
           <Title>
