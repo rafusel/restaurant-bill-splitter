@@ -96,7 +96,7 @@ export default class ReceiptForm extends React.Component {
         </Title>
 
         <Row style={{ marginBottom: '20px' }}>
-          <Col flex="auto" className="pr-5">
+          <Col flex="auto" className="pr-5 pb-10">
             <Input
               value={this.state.name}
               onChange={this.handleMealNameUpdate}
@@ -106,7 +106,7 @@ export default class ReceiptForm extends React.Component {
             />
           </Col>
 
-          <Col flex="auto" className="pr-5">
+          <Col flex="auto" className="pr-5 pb-10">
             <Input
               value={this.state.cost}
               onChange={this.handleMealCostUpdate}
@@ -116,7 +116,7 @@ export default class ReceiptForm extends React.Component {
             />
           </Col>
 
-          <Col flex="auto" className="pr-5">
+          <Col flex="auto" className="pr-5 pb-10">
             <Select
               style={{ width: '100%' }}
               size="large"
