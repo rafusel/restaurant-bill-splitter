@@ -1,11 +1,19 @@
 import React,  {useState} from 'react';
+import { Typography, Button, Input } from 'antd';
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import OrdererCard from './OrdererCard';
+import './App.css';
+
+const { Title } = Typography;
 
 export default function OrderersForm(props) {
   const orderers = props.orderers.map((orderer, index) => {
     return (
       <React.Fragment>
-        <li>{orderer.toString()}</li>
-        <button onClick={() => { props.deleteOrderer(index) }}>Delete Me</button>
+        <OrdererCard
+          name={orderer.toString()}
+          handleDelete={() => { props.deleteOrderer(index) }}
+        />
       </React.Fragment>
     );
   });
@@ -13,21 +21,32 @@ export default function OrderersForm(props) {
   const [newOrderer, setNewOrderer] = useState('');
 
   const onAddOrdererClick = () => {
+
     setNewOrderer('');
     props.addOrderer(newOrderer);
   }
 
   return (
-    <div>
-      <h1>Orderers</h1>
-      <ul>
-        {orderers}
-      </ul>
-      <h2>
+    <div style={{ marginTop: '60px' }}>
+      <Title>Orderer Details</Title>
+      <Title level={2}>
         Add Orderer
-      </h2>
-      <input value={newOrderer} onChange={(event) => { setNewOrderer(event.target.value) }} />
-      <button onClick={onAddOrdererClick}>Add Orderer</button>
+      </Title>
+      <Input
+        size="large"
+        placeholder="Orderer name"
+        prefix={<UserOutlined />}
+        value={newOrderer}
+        onChange={(event) => { setNewOrderer(event.target.value) }}
+        onKeyPress={event => event.key === 'Enter' && onAddOrdererClick()}
+        suffix={
+          <Button type="primary" onClick={onAddOrdererClick}>
+            <PlusOutlined />
+          </Button>
+        }
+        style={{ marginBottom: '10px' }}
+      />
+       {orderers}
     </div>
 
   );

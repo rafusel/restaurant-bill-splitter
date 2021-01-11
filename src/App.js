@@ -1,7 +1,10 @@
 import React from 'react';
+import './App.css';
 import OrderersForm from './OrderersForm';
 import ReceiptForm from './ReceiptForm';
 import OutputTable from './OutputTable';
+import { Layout } from 'antd';
+import { CoffeeOutlined } from '@ant-design/icons';
 
 class App extends React.Component {
   constructor(props) {
@@ -83,28 +86,37 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <OrderersForm
-          orderers={this.state.orderers}
-          addOrderer={this.addOrderer}
-          deleteOrderer={this.deleteOrderer}
-        />
+      <Layout>
+        <Layout.Header className="white fs-30">
+          <CoffeeOutlined spin={true} />
+          {'   '}
+          Fair Share
+        </Layout.Header>
+        <Layout>
+          <Layout.Content className="main-content">
+            <OrderersForm
+              orderers={this.state.orderers}
+              addOrderer={this.addOrderer}
+              deleteOrderer={this.deleteOrderer}
+            />
 
-        <ReceiptForm
-          updateServiceFee={this.updateServiceFee}
-          updateDeliveryFee={this.updateDeliveryFee}
-          updateTotal={this.updateTotal}
-          addMealItem={this.addMealItem}
-          deleteMealItem={this.deleteMealItem}
-          orderers={this.state.orderers}
-          receipt={this.state.receipt}
-        />
+            <ReceiptForm
+              updateServiceFee={this.updateServiceFee}
+              updateDeliveryFee={this.updateDeliveryFee}
+              updateTotal={this.updateTotal}
+              addMealItem={this.addMealItem}
+              deleteMealItem={this.deleteMealItem}
+              orderers={this.state.orderers}
+              receipt={this.state.receipt}
+            />
 
-        <OutputTable
-          receipt={this.state.receipt}
-          orderers={this.state.orderers}
-        />
-      </div>
+            <OutputTable
+              receipt={this.state.receipt}
+              orderers={this.state.orderers}
+            />
+          </Layout.Content>
+        </Layout>
+      </Layout>
     )
   }
 }

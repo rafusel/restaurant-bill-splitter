@@ -1,4 +1,22 @@
 import React from 'react';
+import './App.css';
+import { Typography, Table } from 'antd';
+import { FrownOutlined } from '@ant-design/icons';
+
+const { Title } = Typography;
+
+const columns = [
+  {
+    title: 'Orderer',
+    dataIndex: 'orderer',
+    key: 'orderer',
+  },
+  {
+    title: 'Share of Total',
+    dataIndex: 'shareOfTotal',
+    key: 'shareOfTotal',
+  },
+];
 
 export default class OutputTable extends React.Component {
   getMealItemTotalByOrderer(orderer) {
@@ -28,7 +46,11 @@ export default class OutputTable extends React.Component {
       const mealItemTotalForOrderer = this.getMealItemTotalByOrderer(orderer);
       const fractionOfSubtotal = mealItemTotalForOrderer / this.getSubtotal();
       const ordererShareOfTotal = shareEquallyTotalPerPerson + (fractionOfSubtotal * totalMinusShareEquallyValues);
-      totals.push(ordererShareOfTotal);
+      const shareTotalObject = {
+        orderer,
+        shareOfTotal: `$${ordererShareOfTotal.toFixed(2)}`,
+      }
+      totals.push(shareTotalObject);
     })
     return totals;
   }
@@ -45,40 +67,30 @@ export default class OutputTable extends React.Component {
 
     if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats) {
       return (
-        <div>
-          <h1>
+        <div style={{ paddingBottom: '30px' }}>
+          <Title>
             Your splits
-          </h1>
-          <table>
-            <tr>
-              <th>
-                Orderer
-              </th>
-              <th>
-                Share of Total
-              </th>
-            </tr>
-            {
-              this.getShareTotals().map((total, index) => (
-                <tr>
-                  <td>{this.props.orderers[index]}</td>
-                  <td>{`$${total.toFixed(2)}`}</td>
-                </tr>
-              ))
-            }
-          </table>
+          </Title>
+          <Table columns={columns} dataSource={this.getShareTotals()} />
         </div>
       )
     }
 
     return (
       <div>
-        <h1>
-          Your splits
-        </h1>
-        <p>
-          Something's not quite right.
-        </p>
+        <Title>
+          No splits to show
+        </Title>
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <span style={{ margin: 'auto', fontSize: '100px' }}>
+            <FrownOutlined />
+          </span>
+        </div>
       </div>
     )
   }

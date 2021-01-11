@@ -1,0 +1,66 @@
+@import '~antd/dist/antd.css';
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .main-content {
+    width: 90%;
+    margin-left: 20px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .main-content {
+    width: 90%;
+    margin-left: 20px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .main-content {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .main-content {
+    width: 70%;
+    margin: auto;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .main-content {
+    width: 992px;
+    margin: auto;
+  }
+}
+
+.white {
+  color: white;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.pr-5 {
+  padding-right: 10px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.max-w-300 {
+  max-width: 300px;
+}

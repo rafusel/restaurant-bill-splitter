@@ -1,4 +1,9 @@
 import React from 'react';
+import { Typography, Table, Button, Input, Select, Row, Col } from 'antd';
+import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined } from '@ant-design/icons';
+
+const { Title } = Typography;
+const { Option } = Select;
 
 export default class ReceiptForm extends React.Component {
   constructor(props) {
@@ -16,6 +21,36 @@ export default class ReceiptForm extends React.Component {
     this.deleteMealItem = this.deleteMealItem.bind(this);
   }
 
+  getColumns() {
+    const columns = [
+      {
+        title: 'Item',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Price',
+        dataIndex: 'cost',
+        key: 'cost',
+      },
+      {
+        title: 'Orderer',
+        dataIndex: 'orderer',
+        key: 'orderer',
+      },
+      {
+        title: 'Delete',
+        dataIndex: 'deleteFunction',
+        render: (text, record) => (
+            <Button type="primary" onClick={() => { this.deleteMealItem(record.index) }}>
+              <DeleteOutlined />
+            </Button>
+          ),
+      },
+    ];
+    return columns;
+  }
+
   handleMealNameUpdate(event) {
     this.setState({
       name: event.target.value,
@@ -28,10 +63,8 @@ export default class ReceiptForm extends React.Component {
     });
   }
 
-  handleMealOrdererUpdate(event) {
-    this.setState({
-      orderer: event.target.value,
-    });
+  handleMealOrdererUpdate(orderer) {
+    this.setState({ orderer });
   }
 
   addMealItem() {
@@ -53,80 +86,108 @@ export default class ReceiptForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>
+      <div style={{ marginTop: '30px' }}>
+        <Title>
           Meal Details
-        </h1>
+        </Title>
 
-        <h2>
-          Meal Items
-        </h2>
-        <table>
-          <tr>
-            <th>
-              Item
-            </th>
-            <th>
-              Cost
-            </th>
-            <th>
-              Orderer
-            </th>
-            <th>
-              Delete Button
-            </th>
-          </tr>
-          {this.props.receipt.mealItems.map((item, index) => (
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.cost}</td>
-              <td>{item.orderer}</td>
-              <td><button onClick={() => { this.deleteMealItem(index) }}>Delete Me</button></td>
-            </tr>
-          ))}
-        </table>
-
-        <h3>
+        <Title level={2}>
           Add Meal Items
-        </h3>
-        <label>
-          Meal Item Name
-        </label>
-        <input value={this.state.name} onChange={this.handleMealNameUpdate} />
+        </Title>
 
-        <label>
-          Meal Item Cost
-        </label>
-        <input value={this.state.cost} onChange={this.handleMealCostUpdate} />
+        <Row style={{ marginBottom: '20px' }}>
+          <Col flex="auto" className="pr-5">
+            <Input
+              value={this.state.name}
+              onChange={this.handleMealNameUpdate}
+              prefix={<ShoppingCartOutlined />}
+              size="large"
+              placeholder="Meal item name"
+            />
+          </Col>
 
-        <label>
-          Meal Item Orderer
-        </label>
-        <select value={this.state.orderer} onChange={this.handleMealOrdererUpdate}>
-          <option value="changeme">Change Me</option>
-          {
-            this.props.orderers.map((orderer, index) => (
-              <option value={orderer}>{orderer}</option>
-            ))
-          }
-        </select>
+          <Col flex="auto" className="pr-5">
+            <Input
+              value={this.state.cost}
+              onChange={this.handleMealCostUpdate}
+              prefix={<DollarOutlined />}
+              size="large"
+              placeholder="Meal item price"
+            />
+          </Col>
 
-        <button onClick={this.addMealItem}>Add Meal Item</button>
+          <Col flex="auto" className="pr-5">
+            <Select
+              style={{ width: '100%' }}
+              size="large"
+              value={this.state.orderer}
+              onChange={this.handleMealOrdererUpdate}
+            >
+              <Option value="changeme">Orderer</Option>
+              {
+                this.props.orderers.map((orderer, index) => (
+                  <Option value={orderer}>{orderer}</Option>
+                ))
+              }
+            </Select>
+          </Col>
 
-        <h2>
+          <Col flex="10px">
+            <Button
+              type="primary"
+              size="large"
+              onClick={this.addMealItem}
+            >
+              Add Meal Item
+            </Button>
+          </Col>
+        </Row>
+
+        {
+          !!this.props.receipt.mealItems.length && (
+            <Table
+              key={this.props.receipt.mealItems}
+              dataSource={this.props.receipt.mealItems.map((item, index) => {
+                item.index = index;
+                return item;
+              })}
+              columns={this.getColumns()}
+            />
+          )
+        }
+
+        <Title level={2}>
           Total
-        </h2>
-        <input value={this.props.receipt.total.toString()}  onChange={(e) => { this.props.updateTotal(e.target.value) }} />
+        </Title>
+        <Input
+          value={this.props.receipt.total.toString()}
+          onChange={(e) => { this.props.updateTotal(e.target.value) }}
+          size="large"
+          prefix={<DollarOutlined />}
+          className="mb-15 max-w-300"
+        />
 
-        <h2>
+        <Title level={2}>
           Delivery Fee
-        </h2>
-        <input value={this.props.receipt.deliveryFee.toString()} onChange={(e) => { this.props.updateDeliveryFee(e.target.value) }} />
+        </Title>
+        <Input
+          value={this.props.receipt.deliveryFee.toString()}
+          onChange={(e) => { this.props.updateDeliveryFee(e.target.value) }}
+          size="large"
+          prefix={<DollarOutlined />}
+          className="mb-15 max-w-300"
+        />
 
-        <h2>
+        <Title level={2}>
           Service Fee
-        </h2>
-        <input value={this.props.receipt.serviceFee.toString()} onChange={(e) => { this.props.updateServiceFee(e.target.value) }} />
+        </Title>
+        <Input
+          value={this.props.receipt.serviceFee.toString()}
+          onChange={(e) => { this.props.updateServiceFee(e.target.value) }}
+          size="large"
+          prefix={<DollarOutlined />}
+          className="mb-15 max-w-300"
+        />
       </div>
     );
   }
