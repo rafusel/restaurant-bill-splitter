@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/restaurant-bill-splitter/static/css/main.e2a47048.chunk.css",
-    "main.js": "/restaurant-bill-splitter/static/js/main.d1f6db96.chunk.js",
-    "main.js.map": "/restaurant-bill-splitter/static/js/main.d1f6db96.chunk.js.map",
+    "main.css": "/restaurant-bill-splitter/static/css/main.59ecaa24.chunk.css",
+    "main.js": "/restaurant-bill-splitter/static/js/main.f9c6e06d.chunk.js",
+    "main.js.map": "/restaurant-bill-splitter/static/js/main.f9c6e06d.chunk.js.map",
     "runtime-main.js": "/restaurant-bill-splitter/static/js/runtime-main.cac23216.js",
     "runtime-main.js.map": "/restaurant-bill-splitter/static/js/runtime-main.cac23216.js.map",
     "static/css/2.31ba96b9.chunk.css": "/restaurant-bill-splitter/static/css/2.31ba96b9.chunk.css",
@@ -10,14 +10,14 @@
     "static/js/2.045be47b.chunk.js.map": "/restaurant-bill-splitter/static/js/2.045be47b.chunk.js.map",
     "index.html": "/restaurant-bill-splitter/index.html",
     "static/css/2.31ba96b9.chunk.css.map": "/restaurant-bill-splitter/static/css/2.31ba96b9.chunk.css.map",
-    "static/css/main.e2a47048.chunk.css.map": "/restaurant-bill-splitter/static/css/main.e2a47048.chunk.css.map",
+    "static/css/main.59ecaa24.chunk.css.map": "/restaurant-bill-splitter/static/css/main.59ecaa24.chunk.css.map",
     "static/js/2.045be47b.chunk.js.LICENSE.txt": "/restaurant-bill-splitter/static/js/2.045be47b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cac23216.js",
     "static/css/2.31ba96b9.chunk.css",
     "static/js/2.045be47b.chunk.js",
-    "static/css/main.e2a47048.chunk.css",
-    "static/js/main.d1f6db96.chunk.js"
+    "static/css/main.59ecaa24.chunk.css",
+    "static/js/main.f9c6e06d.chunk.js"
   ]
 }
