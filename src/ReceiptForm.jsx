@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Table, Button, Input, Select, Space, message, Modal } from 'antd';
 import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { extractFloatStringFromCurrencyString } from './util';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -60,7 +61,7 @@ export default class ReceiptForm extends React.Component {
 
   handleMealCostUpdate(event) {
     this.setState({
-      cost: event.target.value,
+      cost: this.formatCurrencyString(this.state.cost, event.target.value),
     });
   }
 
@@ -84,6 +85,41 @@ export default class ReceiptForm extends React.Component {
 
   deleteMealItem(index) {
     this.props.deleteMealItem(index);
+  }
+
+  removeAllNonDigits(string) {
+    return string.replace(/\D/g,'');
+  }
+
+  processCurrencyDecimals(string) {
+    return this.removeAllNonDigits(string).slice(0, 2);
+  }
+
+  processCurrencyWholeDollars(string) {
+    return this.addCurrencyCommas(this.removeAllNonDigits(string));
+  }
+
+  addCurrencyCommas(string) {
+    return string.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  formatCurrencyString(previous, curr) {
+    let newString = curr.trim();
+    const hasDecimalAlready = previous.includes('.');
+    const newStringHasDecimal = newString.includes('.');
+
+    if (this.removeAllNonDigits(newString) === '') {
+      return '';
+    }
+
+    if (hasDecimalAlready && newStringHasDecimal) {
+      const newStringArray = newString.split('.');
+      return `$ ${this.processCurrencyWholeDollars(newStringArray[0])}.${this.processCurrencyDecimals(newStringArray[1])}`
+    } else if (newStringHasDecimal) {
+      return `$ ${this.processCurrencyWholeDollars(newString)}.`;
+    } else {
+      return `$ ${this.processCurrencyWholeDollars(newString)}`
+    }
   }
 
   render() {
@@ -113,7 +149,7 @@ export default class ReceiptForm extends React.Component {
             <Input
               value={this.state.name}
               onChange={this.handleMealNameUpdate}
-              prefix={<ShoppingCartOutlined />}
+              suffix={<ShoppingCartOutlined />}
               size="large"
               placeholder="Meal item name"
               className="w-100-percent"
@@ -121,7 +157,7 @@ export default class ReceiptForm extends React.Component {
             <Input
               value={this.state.cost}
               onChange={this.handleMealCostUpdate}
-              prefix={<DollarOutlined />}
+              suffix={<DollarOutlined />}
               size="large"
               placeholder="Meal item price"
               className="w-100-percent"
@@ -149,6 +185,9 @@ export default class ReceiptForm extends React.Component {
               key={this.props.receipt.mealItems}
               dataSource={this.props.receipt.mealItems.map((item, index) => {
                 item.index = index;
+                const floatString = extractFloatStringFromCurrencyString(item.cost);
+                const floatParsed = parseFloat(floatString);
+                item.cost = `$${floatParsed.toFixed(2)}`;
                 return item;
               })}
               columns={this.getColumns()}
@@ -163,9 +202,10 @@ export default class ReceiptForm extends React.Component {
         </Title>
         <Input
           value={this.props.receipt.total.toString()}
-          onChange={(e) => { this.props.updateTotal(e.target.value) }}
+          onChange={(e) => { this.props.updateTotal(this.formatCurrencyString(this.props.receipt.total, e.target.value)); }}
           size="large"
-          prefix={<DollarOutlined />}
+          placeholder="$ 0.00"
+          suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
         />
 
@@ -174,9 +214,10 @@ export default class ReceiptForm extends React.Component {
         </Title>
         <Input
           value={this.props.receipt.deliveryFee.toString()}
-          onChange={(e) => { this.props.updateDeliveryFee(e.target.value) }}
+          onChange={(e) => { this.props.updateDeliveryFee(this.formatCurrencyString(this.props.receipt.deliveryFee, e.target.value)); }}
           size="large"
-          prefix={<DollarOutlined />}
+          placeholder="$ 0.00"
+          suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
         />
 
@@ -185,9 +226,10 @@ export default class ReceiptForm extends React.Component {
         </Title>
         <Input
           value={this.props.receipt.serviceFee.toString()}
-          onChange={(e) => { this.props.updateServiceFee(e.target.value) }}
+          onChange={(e) => { this.props.updateServiceFee(this.formatCurrencyString(this.props.receipt.serviceFee, e.target.value)); }}
           size="large"
-          prefix={<DollarOutlined />}
+          placeholder="$ 0.00"
+          suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
         />
       </div>

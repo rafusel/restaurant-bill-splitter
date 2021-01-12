@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Typography, Table } from 'antd';
 import { FrownOutlined } from '@ant-design/icons';
+import { extractFloatStringFromCurrencyString } from './util';
 
 const { Title } = Typography;
 
@@ -22,23 +23,24 @@ export default class OutputTable extends React.Component {
   getMealItemTotalByOrderer(orderer) {
 
     const itemTotal = this.props.receipt.mealItems.reduce((total, mealItem) => (
-      mealItem.orderer === orderer ? total + parseFloat(mealItem.cost) : total
+      mealItem.orderer === orderer ? total + parseFloat(extractFloatStringFromCurrencyString(mealItem.cost)) : total
     ), 0);
     return itemTotal;
   }
 
   getSubtotal() {
     return this.props.receipt.mealItems.reduce((subtotal, mealItem) => (
-      subtotal + parseFloat(mealItem.cost)
+      subtotal + parseFloat(extractFloatStringFromCurrencyString(mealItem.cost))
     ), 0);
   }
 
   getShareTotals() {
-    const shareEquallyTotalPerPerson = (parseFloat(this.props.receipt.deliveryFee)
-      + parseFloat(this.props.receipt.serviceFee)) / this.props.orderers.length;
+    const shareEquallyTotalPerPerson = (parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.deliveryFee))
+      + parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.serviceFee))) / this.props.orderers.length;
 
-    const totalMinusShareEquallyValues = parseFloat(this.props.receipt.total) - (
-      parseFloat(this.props.receipt.deliveryFee) + parseFloat(this.props.receipt.serviceFee)
+    const totalMinusShareEquallyValues = parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.total)) - (
+      parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.deliveryFee))
+        + parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.serviceFee))
     );
 
     const totals = [];
@@ -56,15 +58,15 @@ export default class OutputTable extends React.Component {
   }
 
   render() {
-    const totalFloat = parseFloat(this.props.receipt.total);
-    const serviceFeeFloat = parseFloat(this.props.receipt.serviceFee);
-    const deliveryFeeFloat = parseFloat(this.props.receipt.deliveryFee);
+    const totalFloat = parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.total));
+    const serviceFeeFloat = parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.serviceFee));
+    const deliveryFeeFloat = parseFloat(extractFloatStringFromCurrencyString(this.props.receipt.deliveryFee));
     const receiptValuesAreFloats = totalFloat && serviceFeeFloat && deliveryFeeFloat;
     const hasOrderers = this.props.orderers.length;
     const hasMealItems = this.props.receipt.mealItems.length;
     const totalMakesSense = totalFloat >= (this.getSubtotal() + serviceFeeFloat + deliveryFeeFloat);
     const mealCostsAreFloats = this.props.receipt.mealItems.every((mealItem) => (
-      parseFloat(mealItem.cost)
+      parseFloat(extractFloatStringFromCurrencyString(mealItem.cost))
     ));
 
     if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats && hasMealItems && totalMakesSense) {
