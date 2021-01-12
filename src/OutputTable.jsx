@@ -77,7 +77,7 @@ export default class OutputTable extends React.Component {
             columns={columns}
             dataSource={this.getShareTotals()}
             pagination={false}
-            style={{ marginBottom: '15px' }}
+            className="mb-15"
           />
         </div>
       )

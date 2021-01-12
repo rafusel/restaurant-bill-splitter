@@ -49,22 +49,14 @@
   font-size: 30px;
 }
 
-.w-80 {
-  width: 80%;
-}
-
-.pr-5 {
-  padding-right: 10px;
-}
-
-.pb-10 {
-  padding-bottom: 5px;
-}
-
 .mb-15 {
   margin-bottom: 15px;
 }
 
 .max-w-300 {
   max-width: 300px;
+}
+
+.w-100-percent {
+  width: 100%;
 }

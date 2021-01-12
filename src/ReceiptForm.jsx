@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, Table, Button, Input, Select, Row, Col } from 'antd';
-import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Typography, Table, Button, Input, Select, Space, message, Modal } from 'antd';
+import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -12,6 +12,7 @@ export default class ReceiptForm extends React.Component {
       name: '',
       cost: '',
       orderer: 'changeme',
+      isModalVisible: false,
     };
 
     this.handleMealCostUpdate = this.handleMealCostUpdate.bind(this);
@@ -73,10 +74,11 @@ export default class ReceiptForm extends React.Component {
         name: '',
         orderer: 'changeme',
         cost: '',
+        isModalVisible: false,
       });
       this.props.addMealItem(this.state);
     } else {
-      alert('Change the orderer for this meal item.')
+      message.error('Change the orderer for this meal item.');
     }
   }
 
@@ -91,36 +93,44 @@ export default class ReceiptForm extends React.Component {
           Meal Details
         </Title>
 
-        <Title level={2}>
+        <Button
+          type="primary"
+          size="large" onClick={() => { this.setState({ isModalVisible: true }) }}
+          className="mb-15"
+        >
           Add Meal Items
-        </Title>
+          <ShoppingCartOutlined/>
+        </Button>
 
-        <Row style={{ marginBottom: '20px' }}>
-          <Col flex="auto" className="pr-5 pb-10">
+        <Modal
+          title="Add Meal Item"
+          visible={this.state.isModalVisible}
+          okText="Add Meal Item"
+          onOk={this.addMealItem}
+          onCancel={() => { this.setState({ isModalVisible: false }) }}
+        >
+          <Space direction="vertical"  className="w-100-percent">
             <Input
               value={this.state.name}
               onChange={this.handleMealNameUpdate}
               prefix={<ShoppingCartOutlined />}
               size="large"
               placeholder="Meal item name"
+              className="w-100-percent"
             />
-          </Col>
-
-          <Col flex="auto" className="pr-5 pb-10">
             <Input
               value={this.state.cost}
               onChange={this.handleMealCostUpdate}
               prefix={<DollarOutlined />}
               size="large"
               placeholder="Meal item price"
+              className="w-100-percent"
             />
-          </Col>
-
-          <Col flex="auto" className="pr-5 pb-10">
             <Select
               style={{ width: '100%' }}
               size="large"
               value={this.state.orderer}
+              className="w-100-percent"
               onChange={this.handleMealOrdererUpdate}
             >
               <Option value="changeme">Orderer</Option>
@@ -130,18 +140,8 @@ export default class ReceiptForm extends React.Component {
                 ))
               }
             </Select>
-          </Col>
-
-          <Col flex="10px">
-            <Button
-              type="primary"
-              size="large"
-              onClick={this.addMealItem}
-            >
-              <PlusOutlined />
-            </Button>
-          </Col>
-        </Row>
+          </Space>
+        </Modal>
 
         {
           !!this.props.receipt.mealItems.length && (
@@ -153,7 +153,7 @@ export default class ReceiptForm extends React.Component {
               })}
               columns={this.getColumns()}
               pagination={false}
-              style={{ marginBottom: '15px' }}
+              className="mb-15"
             />
           )
         }
