@@ -71,7 +71,7 @@ export default class OutputTable extends React.Component {
 
     if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats && hasMealItems && totalMakesSense) {
       return (
-        <div style={{ paddingBottom: '30px' }}>
+        <div style={{ padding: '30px 0 30px 0' }}>
           <Title>
             Your splits
           </Title>
@@ -86,7 +86,7 @@ export default class OutputTable extends React.Component {
     }
 
     return (
-      <div>
+      <div style={{ marginTop: '30px' }}>
         <Title level={2}>
           No splits to show
         </Title>
