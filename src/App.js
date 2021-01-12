@@ -107,7 +107,7 @@ class App extends React.Component {
         <Layout.Header className="white fs-30">
           <CoffeeOutlined spin={true} />
           {'   '}
-          Uber Eats Bill Splitter
+          Uber Eats Bill Split Calculator
         </Layout.Header>
         <Layout>
           <Layout.Content className="main-content">
