@@ -161,6 +161,7 @@ export default class ReceiptForm extends React.Component {
               size="large"
               placeholder="Meal item price"
               className="w-100-percent"
+              inputMode="decimal"
             />
             <Select
               style={{ width: '100%' }}
@@ -207,6 +208,7 @@ export default class ReceiptForm extends React.Component {
           placeholder="$ 0.00"
           suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
+          inputMode="decimal"
         />
 
         <Title level={5}>
@@ -219,6 +221,7 @@ export default class ReceiptForm extends React.Component {
           placeholder="$ 0.00"
           suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
+          inputMode="decimal"
         />
 
         <Title level={5}>
@@ -231,6 +234,7 @@ export default class ReceiptForm extends React.Component {
           placeholder="$ 0.00"
           suffix={<DollarOutlined />}
           className="mb-15 max-w-300"
+          inputMode="decimal"
         />
       </div>
     );
