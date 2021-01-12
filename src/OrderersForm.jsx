@@ -26,8 +26,8 @@ export default function OrderersForm(props) {
 
   return (
     <div style={{ marginTop: '60px' }}>
-      <Title>Orderer Details</Title>
-      <Title level={2}>
+      <Title level={2}>Orderer Details</Title>
+      <Title level={5}>
         Add Orderer
       </Title>
       <Input

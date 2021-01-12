@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+.main-content {
+  min-height: 100vh;
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

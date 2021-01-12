@@ -85,7 +85,7 @@ export default class OutputTable extends React.Component {
 
     return (
       <div>
-        <Title>
+        <Title level={2}>
           No splits to show
         </Title>
         <div style={{

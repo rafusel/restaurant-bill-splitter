@@ -89,8 +89,8 @@ export default class ReceiptForm extends React.Component {
   render() {
     return (
       <div style={{ marginTop: '30px' }}>
-        <Title>
-          Meal Details
+        <Title level={2}>
+          Order Details
         </Title>
 
         <Button
@@ -158,7 +158,7 @@ export default class ReceiptForm extends React.Component {
           )
         }
 
-        <Title level={2}>
+        <Title level={5}>
           Total
         </Title>
         <Input
@@ -169,7 +169,7 @@ export default class ReceiptForm extends React.Component {
           className="mb-15 max-w-300"
         />
 
-        <Title level={2}>
+        <Title level={5}>
           Delivery Fee
         </Title>
         <Input
@@ -180,7 +180,7 @@ export default class ReceiptForm extends React.Component {
           className="mb-15 max-w-300"
         />
 
-        <Title level={2}>
+        <Title level={5}>
           Service Fee
         </Title>
         <Input
