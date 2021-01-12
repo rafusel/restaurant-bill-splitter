@@ -134,7 +134,7 @@ export default class ReceiptForm extends React.Component {
           size="large" onClick={() => { this.setState({ isModalVisible: true }) }}
           className="mb-15"
         >
-          Add Meal Items
+          Add Meal Item
           <PlusOutlined />
         </Button>
 
