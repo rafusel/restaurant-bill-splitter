@@ -43,11 +43,11 @@ export default class OutputTable extends React.Component {
 
     const totals = [];
     this.props.orderers.forEach((orderer) => {
-      const mealItemTotalForOrderer = this.getMealItemTotalByOrderer(orderer);
+      const mealItemTotalForOrderer = this.getMealItemTotalByOrderer(orderer.name);
       const fractionOfSubtotal = mealItemTotalForOrderer / this.getSubtotal();
       const ordererShareOfTotal = shareEquallyTotalPerPerson + (fractionOfSubtotal * totalMinusShareEquallyValues);
       const shareTotalObject = {
-        orderer,
+        orderer: orderer.name,
         shareOfTotal: `$${ordererShareOfTotal.toFixed(2)}`,
       }
       totals.push(shareTotalObject);

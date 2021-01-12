@@ -20,8 +20,13 @@ class App extends React.Component {
     };
   }
 
+  getRandomOrdererColor = () => {
+    const backgroundColors = ['#ff8519', '#07d907', '#c904db', '#fa0c34', '#0cfae2', '#ff1979'];
+    return backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
+  }
+
   addOrderer = (orderer) => {
-    const doesOrdererExist = !!this.state.orderers.find(o => o === orderer);
+    const doesOrdererExist = !!this.state.orderers.find(o => o.name === orderer);
     const isOrdererBlank = orderer === '';
 
     if (doesOrdererExist) {
@@ -30,7 +35,10 @@ class App extends React.Component {
       message.error('Orderer is required.');
     } else {
       const orderers = this.state.orderers;
-      orderers.push(orderer);
+      orderers.push({
+        name: orderer,
+        color: this.getRandomOrdererColor(),
+      });
       this.setState({ orderers });
     }
   }
@@ -45,7 +53,7 @@ class App extends React.Component {
     const mealItems = this.state.receipt.mealItems;
     const mealItemIndices = []
     mealItems.forEach((mealItem, index) => {
-      if (mealItem.orderer === orderer) {
+      if (mealItem.orderer === orderer.name) {
         mealItemIndices.push(index);
       }
     });
@@ -99,7 +107,7 @@ class App extends React.Component {
         <Layout.Header className="white fs-30">
           <CoffeeOutlined spin={true} />
           {'   '}
-          Fair Share
+          Uber Eats Bill Splitter
         </Layout.Header>
         <Layout>
           <Layout.Content className="main-content">

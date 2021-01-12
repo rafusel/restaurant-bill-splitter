@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DeleteOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 export default function OrdererCard(props) {
-  const backgroundColors = ['#ff8519', '#07d907', '#c904db', '#fa0c34', '#0cfae2', '#ff1979'];
-  const [backgroundColor] = useState(
-    backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
-  );
   const styles = {
-    backgroundColor: backgroundColor,
+    backgroundColor: props.backgroundColor,
     borderRadius: '10px',
     color: 'white',
     fontSize: '25px',

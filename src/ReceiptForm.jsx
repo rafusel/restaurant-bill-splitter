@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Table, Button, Input, Select, Space, message, Modal } from 'antd';
-import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -99,7 +99,7 @@ export default class ReceiptForm extends React.Component {
           className="mb-15"
         >
           Add Meal Items
-          <ShoppingCartOutlined/>
+          <PlusOutlined />
         </Button>
 
         <Modal
@@ -136,7 +136,7 @@ export default class ReceiptForm extends React.Component {
               <Option value="changeme">Orderer</Option>
               {
                 this.props.orderers.map((orderer, index) => (
-                  <Option value={orderer}>{orderer}</Option>
+                  <Option value={orderer.name}>{orderer.name}</Option>
                 ))
               }
             </Select>

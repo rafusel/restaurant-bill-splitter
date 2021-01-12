@@ -10,7 +10,8 @@ export default function OrderersForm(props) {
   const orderers = props.orderers.map((orderer, index) => {
     return (
       <OrdererCard
-        name={orderer.toString()}
+        name={orderer.name}
+        backgroundColor={orderer.color}
         handleDelete={() => { props.deleteOrderer(index) }}
       />
     );
@@ -41,7 +42,7 @@ export default function OrderersForm(props) {
             <PlusOutlined />
           </Button>
         }
-        style={{ marginBottom: '10px' }}
+        className="mb-15"
       />
        {orderers}
     </div>
