@@ -76,12 +76,14 @@ class App extends React.Component {
   updateDeliveryFee = (deliveryFee) => {
     const receipt = this.state.receipt;
     receipt.deliveryFee = deliveryFee;
-    this.setState({ receipt });  }
+    this.setState({ receipt });
+  }
 
   updateServiceFee = (serviceFee) => {
     const receipt = this.state.receipt;
     receipt.serviceFee = serviceFee;
-    this.setState({ receipt });  }
+    this.setState({ receipt });
+  }
 
   addMealItem = (mealItem) => {
     const mealItems = this.state.receipt.mealItems;
@@ -90,6 +92,7 @@ class App extends React.Component {
     const receipt = this.state.receipt;
     receipt.mealItems = mealItems
     this.setState({ receipt });
+    message.success('Meal item added.')
   }
 
   deleteMealItem = (index) => {

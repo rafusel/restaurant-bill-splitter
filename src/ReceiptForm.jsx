@@ -44,10 +44,10 @@ export default class ReceiptForm extends React.Component {
         title: 'Delete',
         dataIndex: 'deleteFunction',
         render: (text, record) => (
-            <Button type="primary" onClick={() => { this.deleteMealItem(record.index) }}>
-              <DeleteOutlined />
-            </Button>
-          ),
+          <Button type="primary" onClick={() => { this.deleteMealItem(record.index) }}>
+            <DeleteOutlined />
+          </Button>
+        ),
       },
     ];
     return columns;
@@ -75,7 +75,6 @@ export default class ReceiptForm extends React.Component {
         name: '',
         orderer: 'changeme',
         cost: '',
-        isModalVisible: false,
       });
       this.props.addMealItem(this.state);
     } else {
@@ -88,7 +87,7 @@ export default class ReceiptForm extends React.Component {
   }
 
   removeAllNonDigits(string) {
-    return string.replace(/\D/g,'');
+    return string.replace(/\D/g, '');
   }
 
   processCurrencyDecimals(string) {
@@ -145,7 +144,7 @@ export default class ReceiptForm extends React.Component {
           onOk={this.addMealItem}
           onCancel={() => { this.setState({ isModalVisible: false }) }}
         >
-          <Space direction="vertical"  className="w-100-percent">
+          <Space direction="vertical" className="w-100-percent">
             <Input
               value={this.state.name}
               onChange={this.handleMealNameUpdate}
