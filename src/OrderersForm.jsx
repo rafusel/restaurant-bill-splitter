@@ -22,9 +22,11 @@ export default function OrderersForm(props) {
   const [newOrderer, setNewOrderer] = useState('');
   const [previousOrderers, setPreviousOrderers] = useState(previousOrderersInitialValue);
 
+  const isNewOrdererInPreviousOrderers = () => previousOrderers.some(o => o === newOrderer)
+
   const onAddOrdererClick = () => {
     setNewOrderer('');
-    const isNotPreviousOrderer = !previousOrderers.some(o => o === newOrderer);
+    const isNotPreviousOrderer = !isNewOrdererInPreviousOrderers();
     if (isNotPreviousOrderer && newOrderer) {
       const newPreviousOrderers = previousOrderers
       newPreviousOrderers.push(newOrderer);
@@ -42,7 +44,7 @@ export default function OrderersForm(props) {
       </Title>
 
       <AutoComplete
-        options={newOrderer ? previousOrderers.map(o => ({ value: o })) : []}
+        options={!newOrderer || isNewOrdererInPreviousOrderers() ? [] : previousOrderers.map(o => ({ value: o }))}
         filterOption={(inputValue, option) => {
           if (option) {
             return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
