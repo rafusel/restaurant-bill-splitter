@@ -1,5 +1,5 @@
-import React,  {useState} from 'react';
-import { Typography, Button, Input } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Button, Input, AutoComplete } from 'antd';
 import { PlusOutlined, UserOutlined } from '@ant-design/icons';
 import OrdererCard from './OrdererCard';
 import './App.css';
@@ -17,10 +17,22 @@ export default function OrderersForm(props) {
     );
   });
 
+  const previousOrderersInitialValue = JSON.parse(window.localStorage.getItem('previousOrderers') || '[]');
+
   const [newOrderer, setNewOrderer] = useState('');
+  const [previousOrderers, setPreviousOrderers] = useState(previousOrderersInitialValue);
+
+  const isNewOrdererInPreviousOrderers = () => previousOrderers.some(o => o === newOrderer)
 
   const onAddOrdererClick = () => {
     setNewOrderer('');
+    const isNotPreviousOrderer = !isNewOrdererInPreviousOrderers();
+    if (isNotPreviousOrderer && newOrderer) {
+      const newPreviousOrderers = previousOrderers
+      newPreviousOrderers.push(newOrderer);
+      setPreviousOrderers(newPreviousOrderers);
+      window.localStorage.setItem('previousOrderers', JSON.stringify(newPreviousOrderers));
+    }
     props.addOrderer(newOrderer);
   }
 
@@ -30,21 +42,34 @@ export default function OrderersForm(props) {
       <Title level={5}>
         Add Orderer
       </Title>
-      <Input
-        size="large"
-        placeholder="Orderer name"
-        prefix={<UserOutlined />}
-        value={newOrderer}
-        onChange={(event) => { setNewOrderer(event.target.value) }}
-        onKeyPress={event => event.key === 'Enter' && onAddOrdererClick()}
-        suffix={
-          <Button type="primary" onClick={onAddOrdererClick}>
-            <PlusOutlined />
-          </Button>
-        }
+
+      <AutoComplete
+        options={!newOrderer || isNewOrdererInPreviousOrderers() ? [] : previousOrderers.map(o => ({ value: o }))}
+        filterOption={(inputValue, option) => {
+          if (option) {
+            return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+          } else {
+            return false;
+          }
+        }}
+        style={{ width: '100%' }}
         className="mb-15"
-      />
-       {orderers}
+        value={newOrderer}
+        onChange={(value) => { setNewOrderer(value) }}
+        onKeyPress={event => event.key === 'Enter' && onAddOrdererClick()}
+      >
+        <Input
+          size="large"
+          placeholder="Orderer name"
+          prefix={<UserOutlined />}
+          suffix={
+            <Button type="primary" onClick={onAddOrdererClick}>
+              <PlusOutlined />
+            </Button>
+          }
+        />
+      </AutoComplete>
+      {orderers}
     </div>
 
   );
