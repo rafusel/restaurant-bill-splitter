@@ -26,10 +26,8 @@ export default function OrderersForm(props) {
     setNewOrderer('');
     const isNotPreviousOrderer = !previousOrderers.some(o => o === newOrderer);
     if (isNotPreviousOrderer && newOrderer) {
-      console.log(previousOrderers);
       const newPreviousOrderers = previousOrderers
       newPreviousOrderers.push(newOrderer);
-      console.log(newPreviousOrderers);
       setPreviousOrderers(newPreviousOrderers);
       window.localStorage.setItem('previousOrderers', JSON.stringify(newPreviousOrderers));
     }
