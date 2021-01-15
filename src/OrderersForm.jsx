@@ -52,8 +52,7 @@ export default function OrderersForm(props) {
             return false;
           }
         }}
-        style={{ width: '100%' }}
-        className="mb-15"
+        className="mb-15 w-100-percent"
         value={newOrderer}
         onChange={(value) => { setNewOrderer(value) }}
         onKeyPress={event => event.key === 'Enter' && onAddOrdererClick()}
