@@ -4,7 +4,7 @@ import OrderersForm from './OrderersForm';
 import ReceiptForm from './ReceiptForm';
 import OutputTable from './OutputTable';
 import { Layout, message } from 'antd';
-import { CoffeeOutlined } from '@ant-design/icons';
+import Logo from './assets/logo.png';
 
 class App extends React.Component {
   constructor(props) {
@@ -108,9 +108,14 @@ class App extends React.Component {
     return (
       <Layout>
         <Layout.Header className="white fs-30">
-          <CoffeeOutlined spin={true} />
-          {'   '}
-          Uber Eats Bill Split Calculator
+          <img
+            style={{
+              height: '50px',
+              width: '50px',
+            }}
+            src={Logo}
+            alt="Fair Share Logo"
+          />
         </Layout.Header>
         <Layout>
           <Layout.Content className="main-content">
