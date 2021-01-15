@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Table, Button, Input, Select, Space, message, Modal } from 'antd';
+import { Typography, Table, Button, Input, Select, Space, message, Modal, AutoComplete } from 'antd';
 import { ShoppingCartOutlined, DollarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { extractFloatStringFromCurrencyString } from './util';
 
@@ -14,6 +14,7 @@ export default class ReceiptForm extends React.Component {
       cost: '',
       orderer: 'changeme',
       isModalVisible: false,
+      previousMealItems: JSON.parse(window.localStorage.getItem('previousMealItems') || '[]'),
     };
 
     this.handleMealCostUpdate = this.handleMealCostUpdate.bind(this);
@@ -53,9 +54,9 @@ export default class ReceiptForm extends React.Component {
     return columns;
   }
 
-  handleMealNameUpdate(event) {
+  handleMealNameUpdate(value) {
     this.setState({
-      name: event.target.value,
+      name: value,
     });
   }
 
@@ -70,7 +71,19 @@ export default class ReceiptForm extends React.Component {
   }
 
   addMealItem() {
-    if (this.state.orderer !== 'changeme') {
+    if (this.state.orderer !== 'changeme' && this.state.name && this.state.cost) {
+      const isNotPreviousMealItem = !this.isNewMealItemInPreviousMealItems();
+      if (isNotPreviousMealItem && this.state.name) {
+        const newPreviousMealItems = this.state.previousMealItems;
+        newPreviousMealItems.push({
+          name: this.state.name,
+          cost: this.state.cost,
+        })
+        this.setState({
+          previousMealItems: newPreviousMealItems
+        });
+        window.localStorage.setItem('previousMealItems', JSON.stringify(newPreviousMealItems));
+      }
       this.setState({
         name: '',
         orderer: 'changeme',
@@ -121,6 +134,12 @@ export default class ReceiptForm extends React.Component {
     }
   }
 
+  isNewMealItemInPreviousMealItems() {
+    return this.state.previousMealItems.some(
+      mealItem => mealItem.name === this.state.name && mealItem.cost === this.state.cost
+    );
+  }
+
   render() {
     return (
       <div style={{ marginTop: '30px' }}>
@@ -145,14 +164,38 @@ export default class ReceiptForm extends React.Component {
           onCancel={() => { this.setState({ isModalVisible: false }) }}
         >
           <Space direction="vertical" className="w-100-percent">
-            <Input
+            <AutoComplete
+              options={
+                !this.state.name || this.isNewMealItemInPreviousMealItems()
+                  ? [] : this.state.previousMealItems.map(mealItem => ({
+                    value: `${mealItem.name} - ${mealItem.cost}`,
+                    name: mealItem.name,
+                    cost: mealItem.cost,
+                  }))
+              }
+              filterOption={(inputValue, option) => {
+                if (option) {
+                  return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                } else {
+                  return false;
+                }
+              }}
+              className="w-100-percent"
               value={this.state.name}
               onChange={this.handleMealNameUpdate}
-              suffix={<ShoppingCartOutlined />}
-              size="large"
-              placeholder="Meal item name"
-              className="w-100-percent"
-            />
+              onSelect={(value, option) => {
+                this.setState({
+                  name: option.name,
+                  cost: option.cost,
+                })
+              }}
+            >
+              <Input
+                suffix={<ShoppingCartOutlined />}
+                size="large"
+                placeholder="Meal item name"
+              />
+            </AutoComplete>
             <Input
               value={this.state.cost}
               onChange={this.handleMealCostUpdate}
