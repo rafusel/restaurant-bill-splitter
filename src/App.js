@@ -111,7 +111,7 @@ class App extends React.Component {
           <img
             style={{
               height: '50px',
-              width: '50px',
+              width: 'auto',
             }}
             src={Logo}
             alt="Fair Share Logo"
