@@ -69,7 +69,7 @@ export default class OutputTable extends React.Component {
     ));
     const shareTotals = this.getShareTotals();
     const shareTotalsHaveValues = shareTotals.every((shareTotal) => (
-      shareTotal.shareOfTotal >= 0 && shareTotal.orderer
+      parseFloat(extractFloatStringFromCurrencyString(shareTotal.shareOfTotal)) >= 0 && shareTotal.orderer
     ));
 
     if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats
