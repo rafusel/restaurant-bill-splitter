@@ -63,7 +63,6 @@ export default class OutputTable extends React.Component {
     const receiptValuesAreFloats = totalFloat && serviceFeeFloat && deliveryFeeFloat;
     const hasOrderers = this.props.orderers.length;
     const hasMealItems = this.props.receipt.mealItems.length;
-    const totalMakesSense = totalFloat >= (this.getSubtotal() + serviceFeeFloat + deliveryFeeFloat);
     const mealCostsAreFloats = this.props.receipt.mealItems.every((mealItem) => (
       parseFloat(extractFloatStringFromCurrencyString(mealItem.cost)) >= 0
     ));
@@ -73,7 +72,7 @@ export default class OutputTable extends React.Component {
     ));
 
     if (receiptValuesAreFloats && hasOrderers && mealCostsAreFloats
-      && hasMealItems && totalMakesSense && shareTotalsHaveValues) {
+      && hasMealItems && shareTotalsHaveValues) {
       return (
         <div style={{ padding: '30px 0 30px 0' }}>
           <Title>
